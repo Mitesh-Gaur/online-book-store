@@ -1,13 +1,28 @@
-import React from 'react'
-import DateDisplay from '../components/DateDisplay'
+import React, { useEffect, useState } from 'react'
+import { FeaturedBooks, HeroSection, Navbar } from '../components'
+import { featuredBooksApi } from '../utility/ApiConfigurations'
 
 const HomePage: React.FC = () => {
-    return (
-        <div style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-            <h1 style={{ fontSize: '4em' }}>Hello world!</h1>
-            <DateDisplay />
-        </div>
-    )
+  const [info, setInfo] = useState<any>([])
+  useEffect(()=>{
+    getBooks();
+  }, [])
+
+  const getBooks = async() => {
+    const res = await featuredBooksApi();
+    setInfo(res.data)
+  }
+
+  return (
+    <>
+      <Navbar />
+      <HeroSection />
+      {
+        info ? <FeaturedBooks bookList={info} />
+        : null
+      }
+    </>
+  )
 }
 
 export default HomePage

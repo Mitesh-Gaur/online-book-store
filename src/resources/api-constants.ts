@@ -1,5 +1,5 @@
-const baseUrl = 'http://exampleurl'
+import CustomAxios from "../utility/customAxios"
 
-export const getData = (userId: number): string => {
-    return baseUrl + '/data/' + userId
-}
+export const baseUrl = 'http://localhost:5000/';
+
+CustomAxios.defaults.baseURL = baseUrl;
