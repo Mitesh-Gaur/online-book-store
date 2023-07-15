@@ -27,6 +27,14 @@ const CartButton = ({cartClass}: any) => {
   </button>
 };
 
+const UpdateUserIcon = () => {
+  return <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="24" cy="11" r="7" fill="none" stroke="#333" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/>
+  <path d="M4 41C4 32.1634 12.0589 25 22 25" stroke="#333" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/>
+  <path d="M31 42L41 32L37 28L27 38V42H31Z" fill="none" stroke="#333" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/>
+</svg>
+}
+
 const ProfileButton = ({onProfileClick, showProfileCard, onLogoutClick}: IProfileIcon) => {
   return <div className='relative'>
   <button 
@@ -40,16 +48,26 @@ const ProfileButton = ({onProfileClick, showProfileCard, onLogoutClick}: IProfil
       </svg>
     </div>
   </button>
-    <div className={`absolute -left-6
+    <div className={`absolute -left-28 w-60
     p-4 border rounded custom-transparent-bg
     ${showProfileCard ? 'visible opacity-100 top-10' : 'collapse opacity-0 top-6'}`}
     >
-      <button 
-        className='text-gray-800'
-        onClick={onLogoutClick}
-      >
-        Logout
-      </button>
+      <div className='flex flex-col items-start'>
+        <a
+          className="text-gray-800 flex items-center pb-2"
+          href={ROUTES.UPDATEPAGE}
+        >
+          <UpdateUserIcon />
+          Update Profile
+        </a>
+        <hr className='w-full' />
+        <button
+          className='text-gray-800 pt-2'
+          onClick={onLogoutClick}
+        >
+          Logout
+        </button>
+      </div>
     </div>
   </div>
 }
