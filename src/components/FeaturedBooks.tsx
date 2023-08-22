@@ -18,7 +18,7 @@ export default function FeaturedBooks({ bookList }: any) {
             bookList?.map((item: any) => {
               return <div key={item.book_id} className="p-4 md:w-1/3 sm:mb-0 mb-6">
                 <div className="rounded-lg h-64 overflow-hidden relative">
-                  <img alt="content" className="object-cover object-center md:h-full w-full" src={`${baseUrl}/static/image/${item?.book_image}`} />
+                  <img alt="content" className="object-cover object-center md:h-full w-full" src={`${baseUrl}static/image/${item?.book_image}`} />
                   <div className='absolute top-0 right-0 h-8 w-20 bg-red-400 rounded-bl-lg flex items-center justify-center'>
                     <span className='text-white font-bold'>₹ {item?.book_price}</span>
                   </div>
