@@ -15,7 +15,8 @@ const FloatingInput = ({inputLabel, inputValue, inputType, onChangeText, error, 
     <div className="relative mb-4">
       <input 
         type={`${inputType ?? 'text'}`}
-        id="floating_outlined" 
+        id={`floating_outlined_${inputLabel}`}
+        name={`fo_${inputLabel}`}
         className="block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-900 bg-transparent rounded-lg border border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-gray-900 placeholder-transparent peer" 
         placeholder={inputLabel}
         value={inputValue}

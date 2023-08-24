@@ -1,12 +1,19 @@
-import React, { ReactElement, useCallback, useEffect, useState } from 'react'
+import React, { ForwardedRef, ReactElement, useCallback, useEffect, useRef, useState } from 'react'
 import { baseUrl } from '../../../resources/api-constants';
 import { admin } from '../../../utility/ApiConfigurations';
 import { AnimatePresence, motion } from "framer-motion";
 import Modal from './Modal';
+import { FloatingInput } from '../../../components';
+
+interface IModalContainer {
+  children?: ReactElement | null;
+}
 
 function Books() {
 
   const [info, setInfo] = useState<any>([]);
+  const [file, setFile] = useState<string>('');
+  const inputRef = useRef<null | HTMLInputElement>(null);
 
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
@@ -23,11 +30,32 @@ function Books() {
     setInfo(res.data)
   }, [setInfo])
 
-  // const [showModal, setShowModal] = useState<boolean>(false);
+  const handleClick = () => {
+    // 👇️ open file input box on click of another element
+    if (inputRef && inputRef.current) {
+      inputRef.current.click();
+    }
+  };
 
-  // const onCloseModal = () => {
-  //   setShowModal(false);
-  // }
+  const handleFileChange = (event: any) => {
+    const fileObj = event.target.files && event.target.files[0];
+    if (!fileObj) {
+      return;
+    }
+
+    console.log('fileObj is', fileObj);
+
+    // 👇️ reset file input
+    event.target.value = null;
+
+    // 👇️ is now empty
+    console.log(event.target.files);
+
+    // 👇️ can still access file object here
+    console.log(fileObj);
+    setFile(URL.createObjectURL(fileObj));
+  };
+
 
   return (
     <>
@@ -58,8 +86,55 @@ function Books() {
         </div>
 
         <ModalContainer>
-        {modalOpen ? <Modal modalOpen={modalOpen} text={'dropIn'} type={'dropIn'} handleClose={close} /> : null}
-      </ModalContainer>
+          {modalOpen ? <Modal
+            modalOpen={modalOpen}
+            modalTitle={'Add Product'}
+            type={'dropIn'}
+            handleClose={close}
+            handleSubmit={() => { close() }}
+            modalSubmitLabel={'Submit'}
+          >
+            <div className='w-96 p-4 pb-0'>
+              <FloatingInput
+                inputLabel={'Book Name'}
+                inputValue={''}
+                onChangeText={() => { }}
+                error={''}
+              />
+              <FloatingInput
+                inputLabel={'Book Author'}
+                inputValue={''}
+                onChangeText={() => { }}
+                error={''}
+              />
+              <FloatingInput
+                inputLabel={'Book Price'}
+                inputValue={''}
+                onChangeText={() => { }}
+                error={''}
+              />
+
+              <input
+                style={{ display: 'none' }}
+                ref={inputRef}
+                type="file"
+                onChange={handleFileChange}
+              />
+              { !file ?
+                <button
+                className='border-2 rounded-md p-4 mb-4 w-32 h-32 flex items-center justify-center'
+                onClick={handleClick}
+              >
+                <span className='text-4xl text-gray-900'>+</span>
+              </button> : <img 
+                src={file} 
+                className='border rounded-md mb-4 w-32 h-32 flex items-center justify-center'
+                onClick={handleClick} 
+              />
+              }
+            </div>
+          </Modal> : null}
+        </ModalContainer>
       </section>
     </>
   )
@@ -77,27 +152,23 @@ function Book({ item }: any) {
   </tr>
 }
 
-interface IModalContainer {
-  children?: ReactElement | null;
-}
-
-function ModalContainer({ children } : IModalContainer){
+function ModalContainer({ children }: IModalContainer) {
   return (
-  // Enables the animation of components that have been removed from the tree
-  <AnimatePresence
-    // Disable any initial animations on children that
-    // are present when the component is first rendered
-    initial={false}
-    // Only render one component at a time.
-    // The exiting component will finish its exit
-    // animation before entering component is rendered
-    mode={'wait'}
-    // Fires when all exiting nodes have completed animating out
-    onExitComplete={() => {}}
-  >
-    {children}
-  </AnimatePresence>
-)
+    // Enables the animation of components that have been removed from the tree
+    <AnimatePresence
+      // Disable any initial animations on children that
+      // are present when the component is first rendered
+      initial={false}
+      // Only render one component at a time.
+      // The exiting component will finish its exit
+      // animation before entering component is rendered
+      mode={'wait'}
+      // Fires when all exiting nodes have completed animating out
+      onExitComplete={() => { }}
+    >
+      {children}
+    </AnimatePresence>
+  )
 }
 
 export default Books
