@@ -6,10 +6,11 @@ interface InputLabelType {
   inputType?: string;
   onChangeText?: React.ChangeEventHandler,
   onBlur?: React.ChangeEventHandler,
-  error?: string
+  error?: string,
+  errorStyle?: string
 }
 
-const FloatingInput = ({inputLabel, inputValue, inputType, onChangeText, error, onBlur}: InputLabelType) => {
+const FloatingInput = ({inputLabel, inputValue, inputType, onChangeText, error, onBlur, errorStyle}: InputLabelType) => {
   return (
     <>
     <div className="relative mb-4">
@@ -29,7 +30,7 @@ const FloatingInput = ({inputLabel, inputValue, inputType, onChangeText, error, 
       >{inputLabel}</label>
     </div>
     {error !== '' ? <span
-      className="transition-all text-xs -mt-4 mb-4 text-red-600"
+      className={`${errorStyle} transition-all text-xs -mt-4 mb-4 text-red-600`}
     >
       {error}
     </span> : null

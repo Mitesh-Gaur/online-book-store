@@ -53,7 +53,7 @@ export default function DashboardNavbar({commonTabList, onTabPress}: any) {
       </div>
 
       <aside
-        className={`text-gray-400 fixed md:relative bg-gray-900 body-fon h-screen duration-300 transform ${hideSidebar ? 'w-0' : 'w-60'} md:w-72 z-10 origin-[0]`}
+        className={`text-gray-400 fixed bg-gray-900 body-fon h-screen duration-300 transform ${hideSidebar ? 'w-0' : 'w-60'} md:w-72 z-10 origin-[0]`}
       >
         <div className={`container mx-auto flex flex-wrap py-2 md:py-4 flex-col items-center md:visible ${hideSidebar ? 'invisible' : 'visible' }`}>
           <div>
